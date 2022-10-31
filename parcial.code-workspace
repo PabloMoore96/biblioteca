@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../Proyecto-Agenda-de-contactos-main/Proyecto-Agenda-de-contactos-main"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Pablo Moore CV HTML",
+		"files.associations": {
+			"iostream": "cpp"
+		}
+	}
+}
