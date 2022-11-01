@@ -51,7 +51,7 @@ def user(): #Este es un menu que engloba todas las opciones del usuario
             elif optionUser == 2:
                 biblio.add_user()
             elif optionUser == 3:
-                biblio.show_user()
+                biblio.show_users()
             elif optionUser == 4:
                 biblio.search_user()
             elif optionUser == 5:

@@ -9,23 +9,34 @@ from datetime import datetime #Tuve que llamar el módulo datetime para crear el
 presta=[] #Use una lista que encierra diccionarios, en vez de un diccionario que encierra listas
 
 def create_prestamo(): #Funcion para crear un nuevo préstamo
+    biblio.show_users()
+    username = input("Diga el nombre del usuario. ")
+
     biblio.show_obra()
-    biblio.show_user()
+    obra_nombre = input("Ingresar la obra. ")
 
-    fechaini = datetime.now()
+    user_exist = False
+    obra_exist = False
+    for user in biblio.users:
+        if user["nombre"] == username:
+            user_exist = True
+            for obra in biblio.obras:
+                if obra["titulo"] == obra_nombre:
+                    obra_exist = True
+                    value = {
+                        "usuario": user["nombre"],
+                        "obra": obra["titulo"],
+                        "fechaini": datetime.now(),
+                        "fechadev": ""
+                    }
 
-    user = input("Diga el nombre del usuario. ")
-    obra = input("Ingresar la obra. ")
+                    presta.append(value)
     
-    value = {
+    if not user_exist:
+        print("Usuario no existente")
         
-        "usuario": user,
-        "obra": obra,
-        "fechaini": fechaini,
-        "fechadev": ""
-    }
-
-    presta.append(value)
+    if not obra_exist:
+        print("Obra no existente") 
 
 def show_all_prestamos(): #Muestra todos los prestamos hechos
     for item in presta:
@@ -43,13 +54,13 @@ def fecha_devolcion(): #Crea la fecha de devolución
     
     for item in presta:
         if item["usuario"] == user and item["obra"] == obra:
-            fechafin = datetime(1000, 1, 1)
+            fecha_fin = datetime(1000, 1, 1)
             
-            while fechafin < item["fechaini"]:
+            while fecha_fin < item["fechaini"]:
                 day, month, year = input("Ingresar fecha mayor o igual a la actual: dia mes año (ejemplo: 12/5/2022)\n").split("/")
-                fechafin = datetime(int(year), int(month), int(day))            
+                fecha_fin = datetime(int(year), int(month), int(day))            
 
-            item["fechadev"] = fechafin.strftime('%d/%m/%y')
+            item["fechadev"] = fecha_fin.strftime('%d/%m/%y')
 
             print(item["fechadev"])
 
@@ -65,6 +76,22 @@ def delete_prestamo(): #Borra cada préstamo que sea seleccionado
     selected = int(selected) - 1
 
     presta.pop(selected)
+
+def delete_prestamo(tipo, value): #Borra cada préstamo que sea seleccionado
+    temporal_presta = []
+    global presta
+
+    if tipo == "usuario":
+        for item in presta:
+            if item["usuario"] != value:
+                temporal_presta.append(item)
+
+    if tipo == "obra":
+        for item in presta:
+            if item["obra"] != value:
+                temporal_presta.append(item)
+
+    presta = temporal_presta
 
 def delete_all_prestamos(): #Limpia la lista de préstamo
     presta.clear()
